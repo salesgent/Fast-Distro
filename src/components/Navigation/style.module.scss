@@ -1,0 +1,334 @@
+@import "variables.scss";
+$height: 40px;
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  // justify-content: center;
+  align-items: center;
+  // background: linear-gradient(to right, #00c7c7, #009e47);
+  background-color: #000000;
+  // background: linear-gradient($light-primary-color, $primary-color);
+  color: #ffffff;
+  // border-bottom: 4px solid $primary-color;
+}
+
+.iconsContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1.8rem;
+  color: $primary-color;
+
+  span {
+    transition: 0.4s;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  .icon {
+    transition: 0.4s;
+    cursor: pointer;
+    margin-right: 0.5em;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.scrolledContainer {
+  @extend .container;
+  top: 0px;
+  z-index: 12;
+  animation-name: showHeader;
+  overflow: hidden;
+  // animation-delay: 0.5s;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  box-shadow: 1px 1px 3px #d1d1d1;
+  position: fixed;
+  animation-fill-mode: forwards;
+  .menuBody {
+    transform: translateX(-42.2%);
+  }
+  .horzMenu {
+    max-width: 96vw;
+  }
+}
+
+@keyframes showHeader {
+  0% {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  50% {
+    min-height: 30px;
+  }
+
+  100% {
+    min-height: max-content;
+    overflow: visible;
+  }
+}
+
+.mainContainer {
+  width: 100%;
+  height: 100%;
+  max-width: 1475px;
+  margin: 0 auto;
+  // max-width: 1600px;
+  overflow: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  // margin: 0 3rem;
+  align-items: center;
+  // flex-wrap: wrap;
+  height: fit-content;
+  min-width: 40%;
+  position: relative;
+  // margin: 0 auto;
+}
+
+// @media only screen and (min-width: 2200px) {
+//   .mainContainer {
+//     width: 1600px;
+//     position: relative;
+//   }
+// }
+
+.navLink {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: end;
+  padding: 1rem 1rem;
+  // position: relative;
+  min-width: max-content;
+  height: 100%;
+  cursor: pointer;
+  font-size: 15px;
+
+  a {
+    // font-weight: 600;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    text-transform: capitalize;
+    font-weight: 700;
+    color: #ffffff;
+    svg {
+      font-size: 0.8rem;
+    }
+    &:hover {
+      color: #ffffff;
+    }
+  }
+}
+.navBoxContainer {
+  margin: 0 40px;
+  box-shadow: 0px 0px 4px 1px #042b0960;
+  background: #ffffff;
+  color: #042b09;
+  z-index: 10000;
+  position: relative;
+}
+@media only screen and (max-width: 2400px) {
+  .navBoxContainer {
+    margin: 0 36px;
+  }
+}
+@media only screen and (max-width: 2100px) {
+  .navBoxContainer {
+    margin: 0 28px;
+  }
+}
+@media only screen and (max-width: 2100px) {
+  .navBoxContainer {
+    margin: 0 20px;
+  }
+}
+@media only screen and (max-width: 1440px) {
+  .navLink {
+    font-size: 12px !important;
+
+    a {
+      font-size: 12px !important;
+    }
+  }
+}
+
+//////////nav body/////
+.notch {
+  border-top: 5px solid $primary-color;
+  width: 5px;
+  position: absolute;
+  top: 40px;
+  left: 0%;
+  // transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-top: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 10px solid $primary-color;
+  z-index: 4;
+}
+
+.menuBody {
+  position: absolute;
+  background: white;
+  color: #042b09;
+  z-index: 4;
+  min-width: max-content;
+  top: calc($height - 2px);
+  left: 50% !important;
+  transform: translateX(-44.6%);
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgb(240, 240, 240);
+  text-transform: capitalize;
+  letter-spacing: 1px;
+  font-size: 1rem;
+  overflow-x: auto;
+}
+
+.horzMenu {
+  display: flex;
+  flex-direction: row;
+  width: max-content;
+  padding: 0.5rem;
+  max-height: 75vh;
+  // overflow-x: auto;
+  max-width: 96vw;
+  max-height: 650px;
+  min-width: 130px;
+  text-align: left;
+  margin: 0 auto;
+}
+// @media only screen and (min-width: 2200px) {
+//   .horzMenu {
+//     max-width: 135rem;
+//   }
+// }
+.col {
+  width: max-content;
+  height: max-content;
+  padding: 0 0.5rem;
+  min-width: fit-content;
+
+  .headerLink {
+    font-weight: 600;
+    font-size: 1.2rem;
+    transition: 0.7s;
+    text-decoration: none;
+    color: $primary-color;
+    padding: 0 1rem;
+  }
+}
+
+.subCat {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 0.5rem;
+  align-items: center;
+  height: 100%;
+  max-height: calc(650px - 140px);
+  overflow: auto;
+  // padding: 0 1.2em;
+  a {
+    padding: 0.5rem 1rem;
+    width: 100%;
+    text-align: left;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+    // color: #042B09;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.5s;
+
+    &:hover {
+      color: #000000;
+      padding: 0.5rem 1rem;
+      // background: $primary-color;
+    }
+  }
+}
+.verticalMenuContainer {
+  max-height: 470px;
+  overflow-y: auto;
+  min-width: 130px;
+  max-width: 100vw;
+}
+
+.verticalMenu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 0;
+  // padding-top: 1rem;
+  a {
+    padding: 0.5rem 1rem;
+    width: 100%;
+    font-weight: 500;
+    text-align: left;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.5s;
+    &:hover {
+      color: #000000;
+      // background: $primary-color;
+    }
+  }
+}
+
+.hover {
+  width: 100%;
+  text-align: left;
+  font-size: 1.2rem;
+  cursor: pointer;
+  // color: $secondary-color;
+  transition: 0.5s;
+
+  &:hover {
+    // color: $secondary-color;
+    // color: $primary-color;
+  }
+}
+
+//////////scroll////////
+.container,
+.verticalMenuContainer,
+.horzMenu,
+.navBoxContainer {
+  /* width */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 10px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgb(136, 136, 136);
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}

@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://fastdistro.com
+
+# Sitemaps
+Sitemap: https://fastdistro.com/sitemap.xml
