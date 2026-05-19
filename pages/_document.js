@@ -41,8 +41,8 @@ export default class Document extends NextDocument {
             href="https://app.shopsense.pro/embed/widget.js?zone=31"
             as="script"
           /> */}
-          <title>Fast Distro Distribution</title>
-          <meta name="description" content="Fast Distro Distribution" />
+          <title>Fast Distro</title>
+          <meta name="description" content="Fast Distro" />
           <meta
             name="viewport"
             content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1, maximum-scale=1"
