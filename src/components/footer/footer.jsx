@@ -107,7 +107,7 @@ const footer = ({ width }) => {
                     style={{
                       maxWidth: "259px",
                       width: "100%",
-                      maxHeight: "42px",
+                      maxHeight: "80px",
                       height: "100%",
                       marginBottom: "1rem",
                     }}
@@ -284,8 +284,7 @@ const footer = ({ width }) => {
                 color="#000000"
                 textAlign={"start"}
               >
-                © {new Date().getFullYear()} , Fast Distro Distribution. All
-                rights reserved.
+                © {new Date().getFullYear()} , Fast Distro. All rights reserved.
               </Typography>
             </Grid>
             <Grid

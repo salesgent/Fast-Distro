@@ -130,27 +130,35 @@ export const FooterLink = (
   { children, url, fontWeight, icon, color },
   ...rest
 ) => {
-  if (url) {
-    return (
-      <Link href={url}>
-        <LinkText {...rest} fontWeight={fontWeight} color={color}>
-          {icon && (
-            <span style={{ marginRight: 10, display: "flex", color: color }}>
-              {icon}
-            </span>
-          )}
+  const linkContent = (
+    <LinkText {...rest} fontWeight={fontWeight} color={color}>
+      {icon && (
+        <span style={{ marginRight: 10, display: "flex", color: color }}>
+          {icon}
+        </span>
+      )}
+      {children}
+    </LinkText>
+  );
 
-          {children}
-        </LinkText>
-      </Link>
-    );
-  } else {
+  if (!url) {
+    return linkContent;
+  }
+
+  const isExternalLink =
+    url.startsWith("http") ||
+    url.startsWith("tel:") ||
+    url.startsWith("mailto:");
+
+  if (isExternalLink) {
     return (
-      <LinkText {...rest} fontWeight={fontWeight}>
-        {children}
-      </LinkText>
+      <a href={url} style={{ textDecoration: "none" }}>
+        {linkContent}
+      </a>
     );
   }
+
+  return <Link href={url}>{linkContent}</Link>;
 };
 
 export const IconsBox = styled.div`

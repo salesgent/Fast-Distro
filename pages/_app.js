@@ -25,10 +25,6 @@ import useScrollRestoration from "../src/utilities/hooks/useScrollRestoration";
 import { useRouter } from "next/router";
 import Script from "next/script";
 import { SHOPSENSE_WIDGET_SCRIPT_ID } from "../src/utilities/constants";
-import {
-  BRAND_STOCK_HOME,
-  isBrandStockAllowedPath,
-} from "../src/constants/brandStockOnly";
 
 const EXCLUDE_LAYOUT_PATHS = ["/vendor-portal"];
 
@@ -77,14 +73,6 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   const shouldRenderLayout = !EXCLUDE_LAYOUT_PATHS.includes(pathname);
-
-  useEffect(() => {
-    if (!router.isReady || MAINTENANCE_MODE) return;
-    if (EXCLUDE_LAYOUT_PATHS.includes(pathname)) return;
-    if (!isBrandStockAllowedPath(pathname)) {
-      router.replace(BRAND_STOCK_HOME);
-    }
-  }, [router.isReady, pathname, MAINTENANCE_MODE, router]);
 
   return (
     <StyledThemeProvider theme={theme}>
@@ -152,7 +140,7 @@ function MyApp({ Component, pageProps }) {
                 description={"Please call 972-243-8273 to place orders"}
               />
             ) : shouldRenderLayout ? (
-              <Layout>
+              <Layout businessId={businessId}>
                 <Component {...pageProps} businessId={businessId} />
               </Layout>
             ) : (

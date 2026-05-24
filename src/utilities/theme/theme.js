@@ -14,7 +14,7 @@ const theme = {
       primary: "#000000",
       secondary: "#EAEAEA",
       header: "#000000",
-      footer: "#F9FAFA",
+      footer: "#ffffff",
     },
   },
   typography: {

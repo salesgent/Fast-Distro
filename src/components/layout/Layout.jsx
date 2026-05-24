@@ -1,21 +1,35 @@
-import { Box, Stack } from "@mui/material";
-import { BrandStock } from "@salesgenterp/ui-components";
-import Cookies from "js-cookie";
-import getConfig from "next/config";
-import { useRouter } from "next/router";
+import { Box, Drawer, Stack } from "@mui/material";
+import dynamic from "next/dynamic";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetails } from "../../AsyncFunctions/Auth";
 import { fetchCartData } from "../../AsyncFunctions/cart";
-import { setToken } from "../../store/Auth";
+import { toggleOpenDrawer } from "../../store/cart";
+//////////
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
+import { setStores, setToken } from "../../store/Auth";
+import { useDatafetcher } from "../../utilities/hooks/useDatafetcher";
+import useWindowSize from "../../utilities/hooks/useWindowSize";
+import Navigation from "../Navigation/Navigation";
+import TopHeader from "../TopHeader/TopHeader";
+import CartDrawerStack from "../cartDrawer/CartDrawer";
+import Footer from "../footer/footer";
 
-const Layout = () => {
+const Header = dynamic(() => import("../Header/Header"), { ssr: false });
+
+const Layout = ({ children, businessId }) => {
+  const { width } = useWindowSize();
   const dispatch = useDispatch();
   const { query } = useRouter();
   const userDetails = useSelector((state) => state.auth.userDetails);
   const tokens = useSelector((state) => state.auth.tokens);
-  const { publicRuntimeConfig } = getConfig();
-  const { API_BASE_URL } = publicRuntimeConfig;
+  const openDrawer = useSelector((state) => state.cart.openDrawer);
+  // const { data: stores } = useDatafetcher("/store", true);
+
+  // useEffect(() => {
+  //   dispatch(setStores(stores));
+  // }, [stores]);
 
   useEffect(() => {
     if (query?.accessToken) {
@@ -26,13 +40,13 @@ const Layout = () => {
         }),
       );
     }
-  }, [query, dispatch]);
+  }, [query]);
 
   useEffect(() => {
     if (tokens?.token) {
       getUserDetails(tokens?.token)(dispatch);
     }
-  }, [tokens, dispatch]);
+  }, [tokens]);
 
   useEffect(() => {
     if (userDetails) {
@@ -47,6 +61,7 @@ const Layout = () => {
       const viewSpecificCategory = customer?.viewSpecificCategory ?? null;
       const viewSpecificProduct = customer?.viewSpecificProduct ?? null;
       const tier = customer?.tier ?? null;
+
       Cookies.set("token", tokens?.token, {
         path: "/",
       });
@@ -67,55 +82,44 @@ const Layout = () => {
       Cookies.remove("token", { path: "/" });
       Cookies.remove("stateId", { path: "/" });
     }
-  }, [userDetails, tokens?.token, dispatch]);
+  }, [userDetails]);
 
   return (
     <Stack
       sx={{ width: "100%", overflow: "hidden", background: "#F9FAFA" }}
       flexDirection="column"
     >
+      {<TopHeader businessId={businessId} />}
+      <Header businessId={businessId} />
+      {width > 1200 && <Navigation businessId={businessId} />}
       <Box sx={{ width: "100%" }}>
-        <BrandStock
-          colors={{ primaryColor: "#000000" }}
-          apiEndPoint={API_BASE_URL}
-          storeData={{
-            text1: "",
-            bankInfo: {},
-            text2: "",
-            contactPerson: {},
-            returnPolicy: (
-              <div>
-                <p>
-                  You may ONLY return new, sealed, unopened items within 30 days
-                  of delivery for a full account credit. No return will be
-                  accepted without prior authorization.
-                </p>
-                <p>
-                  WE DO NOT ACCEPT RETURNS FOR THE FOLLOWING ITEMS:
-                  e-liquids/e-juice, disposables, consumable items and clearance
-                  items, no exceptions. Damaged/missing item exchanges must be
-                  reported within 48 hours of delivery to qualify for the return
-                  authorization process.
-                </p>
-                <p>
-                  We&apos;ll also pay the return shipping costs if the return is
-                  a result of our error (you received an incorrect or defective
-                  item, etc). You should expect to receive your refund within
-                  two weeks of giving your package to the return shipper,
-                  however, in many cases you will receive a refund more quickly.
-                  This time period includes the transit time for us to receive
-                  your return from the shipper (5 to 10 business days), and the
-                  time it takes us to process your return once we receive it (3
-                  to 5 business days). If you need to return an item, please
-                  contact us with your order number and details about the
-                  product you would like to return. We will respond quickly with
-                  instructions for how to return items from your order.
-                </p>
-              </div>
-            ),
+        <Drawer
+          open={openDrawer}
+          onClose={() => dispatch(toggleOpenDrawer(false))}
+          anchor="right"
+        >
+          <CartDrawerStack />
+        </Drawer>
+        <main>{children}</main>
+        {/* <Features /> */}
+        {/* <hr
+          style={{
+            maxWidth: "1475px",
+            margin: "auto",
+            marginBottom: "2rem",
+            background: "#000000",
+            height: "2px", // Adjust thickness as needed
+            border: "none", // Ensure no border is applied
           }}
-        />
+        /> */}
       </Box>
+      {/* <Newsteller /> */}
+      {/* <Divider
+        orientation="horizontal"
+        flexItem
+        sx={{ borderColor: "#231F20", margin: "auto auto 2px auto", width: "100%", maxWidth: "1475px" }}
+      /> */}
+      <Footer businessId={businessId} width={width} />
     </Stack>
   );
 };

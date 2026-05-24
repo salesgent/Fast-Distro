@@ -93,14 +93,14 @@ const Row = styled.div`
 
 const leftLinks = [
   {
-    href: "/#",
+    href: "mailto:admin@fastdistro.com",
     icon: <MdOutlineMail size={18} />,
-    label: "info@fastdistro.com",
+    label: "admin@fastdistro.com",
   },
   {
-    href: "tel:+19545333818",
+    href: "tel:+14702720824",
     icon: <FiPhone size={16} />,
-    label: "+1 954-533-3818",
+    label: "+1 470-272-0824",
   },
   // {
   //   href: "mailto:sales@fastdistro",
