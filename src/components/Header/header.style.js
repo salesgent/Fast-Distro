@@ -35,7 +35,7 @@ export const HeaderSection = styled.div`
   // box-shadow: 0px 0px 2px 0px #d1d1d1;
   position: ${(props) => (props.scroll ? "fixed" : "static")};
   animation-fill-mode: forwards;
-  background: #f9fafa;
+  background: #ffffff;
   padding: 0 1em;
   @media screen and (max-width: 768px) {
     // height: 5.25rem;
@@ -67,7 +67,7 @@ export const HeaderContainer = styled.div`
 `;
 export const LogoContainer = styled.div`
   width: 262px;
-  height: 42px;
+  height: 80px;
   cursor: pointer;
   position: relative;
   @media screen and (max-width: 1475px) {

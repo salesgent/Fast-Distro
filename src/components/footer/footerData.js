@@ -32,6 +32,10 @@ export const links1 = [
     alias: "Return Policy",
   },
   {
+    url: "/refund-policy",
+    alias: "Refund Policy",
+  },
+  {
     url: "/disclaimer",
     alias: "Disclaimer",
   },
@@ -62,7 +66,7 @@ export const links3 = [
     alias: "Home",
   },
   {
-    url: "/brands-stock",
+    url: "/stock",
     alias: "Brands/Stock",
   },
   {
@@ -73,22 +77,26 @@ export const links3 = [
     url: "/sms-opt-in",
     alias: "SMS Opt-in",
   },
+  {
+    url: "/stock",
+    alias: "Stocks",
+  },
 ];
 
 export const links4 = [
   {
     url: "/",
-    alias: "3026 SW 42nd St, Suite 3,\n Fort Lauderdale,\n FL 33312",
+    alias: "8750 Westpark Drive, Houston, Texas 77063, USA",
     icon: <FaEarthAmericas />,
   },
   {
-    url: "tel:+19545333818",
-    alias: "+1 954-533-3818",
+    url: "tel:+14702720824",
+    alias: "+1 470-272-0824",
     icon: <SlCallOut />,
   },
   {
-    url: "mailto:info@fastdistro.com",
-    alias: "info@fastdistro.com",
+    url: "mailto:admin@fastdistro.com",
+    alias: "admin@fastdistro.com",
     icon: <TfiEmail />,
   },
 ];
