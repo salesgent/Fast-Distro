@@ -29,7 +29,7 @@ const CartDrawerStack = () => {
   const loading = useSelector((state) => state.cart.isLoading);
   const userDetails = useSelector((state) => state.auth.userDetails);
   const allowLocalCartData = useSelector(
-    (state) => state.cart.allowLocalCartData
+    (state) => state.cart.allowLocalCartData,
   );
   const allowLocalCart = !userDetails && allowLocalCartData;
 
@@ -62,6 +62,7 @@ const CartDrawerStack = () => {
         handleIncrementDecrement={(product) => updateCart(product)}
         imgnotfoundUrl="/images/products/imgnotfound.png"
         handleRedirect={(link) => handleRedirect(link)}
+        doNotShowPrice={true}
         allowToProcessInvoiceForOutOfStockProductsEcommerce={true}
       />
     </CartDrawerStyle>
