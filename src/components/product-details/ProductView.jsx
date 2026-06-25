@@ -582,12 +582,11 @@ const ProductViewContainer = ({ productDetails, loading, id }) => {
             </ProductDetailsTitle>
           </Box>  */}
 
-          {userDetails && (
+          {/* {userDetails && (
             <>
               {product?.masterProductDetails?.standardPriceWithoutDiscount >
               product?.masterProductDetails?.standardPrice ? (
                 <>
-                  {/* <hr style={{ margin: "1rem 0" }} /> */}
                   <PriceBox>
                     <h6>
                       $
@@ -608,11 +607,9 @@ const ProductViewContainer = ({ productDetails, loading, id }) => {
                   </h6>
                 </PriceBox>
               ) : null}
-              {/* <p style={{ color: "gray", fontSize: "3rem", opacity: 0.4, marginTop: "-4rem" }}>
-                {userDetails?.customerDto?.id}
-              </p> */}
+            
             </>
-          )}
+          )} */}
           {product?.body?.content?.length > 0 ? (
             <VariantsTable
               reset={reset}

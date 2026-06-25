@@ -16,7 +16,7 @@ const CheckoutPage = () => {
   const cartData = useSelector((state) => state.cart.cartData);
   const tokens = useSelector((state) => state.auth.tokens);
   const discountCoupons = useSelector(
-    (state) => state.checkout?.discountCoupons
+    (state) => state.checkout?.discountCoupons,
   );
   const userDetails = useSelector((state) => state.auth.userDetails);
 
@@ -60,6 +60,7 @@ const CheckoutPage = () => {
         showShippingPriceRangeLimit={false}
         taxExempt={true}
         fetchCartData={refetchCartData}
+        doNotShowPrice={true}
       />
     </>
   );

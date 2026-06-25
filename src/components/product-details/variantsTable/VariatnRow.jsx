@@ -336,7 +336,7 @@ const VariantsCardRow = ({
             </p>
           )}
         </TableCell>
-        <TableCell component="th">
+        {/* <TableCell component="th">
           {userDetails ? (
             <div>
               <p
@@ -362,7 +362,7 @@ const VariantsCardRow = ({
               <Link href="/account/login">Login</Link>
             </Box>
           )}
-        </TableCell>
+        </TableCell> */}
       </StyledTableRow>
       <Dialog
         open={open}

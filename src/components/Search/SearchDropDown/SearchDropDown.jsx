@@ -15,7 +15,7 @@ const SearchDropDown = ({ searchData }) => {
   const { data: fetchData, error } = useDatafetcher(
     `/ecommerce/product/searchByProductOrCategory?searchInput=${searchData}`,
     searchData.length > 2,
-    { stateId: true }
+    { stateId: true },
   );
   const Debounce = useDebounce(searchData, 5000);
 
@@ -58,7 +58,7 @@ const SearchDropDown = ({ searchData }) => {
                         <Link
                           href={{
                             pathname: `/product-details/${paramCase(
-                              li.alias ?? li.productName
+                              li.alias ?? li.productName,
                             )}`,
                             query: { id: li.productId },
                           }}
@@ -77,9 +77,9 @@ const SearchDropDown = ({ searchData }) => {
 
                               <h2>
                                 {li?.productName}
-                                {userDetails && (
+                                {/* {userDetails && (
                                   <span>$ {li?.standardPrice}</span>
-                                )}
+                                )} */}
                               </h2>
                             </div>
                           </div>

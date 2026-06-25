@@ -132,7 +132,7 @@ const VariantsTable = ({
               ))}
             {/* <StyledTableHeadCell align="left">Stock</StyledTableHeadCell> */}
             <StyledTableHeadCell align="left">Quantity</StyledTableHeadCell>
-            <StyledTableHeadCell align="left">Price</StyledTableHeadCell>
+            {/* <StyledTableHeadCell align="left">Price</StyledTableHeadCell> */}
           </TableRow>
         </TableHead>
         <StyledTableBody>
