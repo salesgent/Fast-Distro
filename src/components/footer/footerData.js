@@ -65,10 +65,10 @@ export const links3 = [
     url: "/",
     alias: "Home",
   },
-  // {
-  //   url: "/stock",
-  //   alias: "Brands/Stock",
-  // },
+  {
+    url: "/stock",
+    alias: "Brands/Stock",
+  },
   {
     url: "/faq",
     alias: "FAQ",
@@ -77,10 +77,10 @@ export const links3 = [
     url: "/sms-opt-in",
     alias: "SMS Opt-in",
   },
-  // {
-  //   url: "/stock",
-  //   alias: "Stocks",
-  // },
+  {
+    url: "/stock",
+    alias: "Stocks",
+  },
 ];
 
 export const links4 = [
