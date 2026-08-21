@@ -8,12 +8,12 @@ const BrandStockComponent = (props) => {
 
   return (
     <Container>
-      <iframe
+      {/* <iframe
         src="https://clerk.chat/misc/sms-opt-in/?widgetId=df66416c-d9a8-452a-bb0c-c21e44ba36f5"
         style={{ display: "flex", height: "100%", width: "100%", minWidth: "320px", minHeight: "600px" }}
         id="clerk-opt-in-form"
         title="Clerk Chat Opt in form"
-      />
+      /> */}
     </Container>
   );
 };
