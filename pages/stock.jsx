@@ -9,7 +9,7 @@ const BrandStockComponent = () => {
 
   return (
     <Container>
-      <BrandStock
+      {/* <BrandStock
         colors={{ primaryColor: "#000000" }}
         apiEndPoint={API_BASE_URL}
         storeData={{
@@ -48,7 +48,7 @@ const BrandStockComponent = () => {
             </div>
           ),
         }}
-      />
+      /> */}
     </Container>
   );
 };
