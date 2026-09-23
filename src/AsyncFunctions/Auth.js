@@ -11,7 +11,7 @@ const { API_BASE_URL } = publicRuntimeConfig;
 ////////////////////////////////////////////////
 
 /////////login function
-export const LoginFunction = (data) => async (dispatch) => {
+export const LoginFunction = (data, Router) => async (dispatch) => {
   dispatch(toggleLoading(true));
   const state = store?.getState();
 
@@ -21,18 +21,22 @@ export const LoginFunction = (data) => async (dispatch) => {
       setToken({
         token: result?.data?.result?.access,
         retoken: result?.data?.result?.refresh,
-      })
+      }),
     );
     const token = result?.data?.result?.access;
     if (token && state?.cart?.localCartData?.cartLineItemDtoList?.length > 0) {
-      dispatch(addTocart(state?.cart?.localCartData?.cartLineItemDtoList, token));
+      dispatch(
+        addTocart(state?.cart?.localCartData?.cartLineItemDtoList, token),
+      );
       dispatch(setLocalCartData(null));
     }
     setAlert("success", "Login successful")(dispatch);
 
     const childCustomers = await getChildCustomers({ token });
     if (childCustomers?.data?.result?.length) {
-      window.location.replace("/account/switchUser");
+      Router?.push("/account/switchUser");
+      // window.location.replace("/account/switchUser");
+      return false;
     }
 
     return true;
@@ -52,24 +56,32 @@ export const switchUserFunction =
         `${API_BASE_URL}/ecommerce/customer/tokenForChild?childCustomerId=${childCustomerId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
-        }
+        },
       );
       dispatch(
         setToken({
           token: result?.data?.result?.access,
           retoken: result?.data?.result?.refresh,
-        })
+        }),
       );
       const newToken = result?.data?.result?.access;
       await getUserDetails(newToken)(dispatch);
-      if (newToken && state?.cart?.localCartData?.cartLineItemDtoList?.length > 0) {
-        dispatch(addTocart(state?.cart?.localCartData?.cartLineItemDtoList, newToken));
+      if (
+        newToken &&
+        state?.cart?.localCartData?.cartLineItemDtoList?.length > 0
+      ) {
+        dispatch(
+          addTocart(state?.cart?.localCartData?.cartLineItemDtoList, newToken),
+        );
         dispatch(setLocalCartData(null));
       }
       setAlert("success", "Switch user successfully")(dispatch);
       return true;
     } catch (err) {
-      setAlert("error", err?.response?.data?.error?.details || "Error in switching user")(dispatch);
+      setAlert(
+        "error",
+        err?.response?.data?.error?.details || "Error in switching user",
+      )(dispatch);
     }
     dispatch(toggleLoading(false));
   };
@@ -107,28 +119,37 @@ export const getUserDetails = (token) => async (dispatch) => {
             setToken({
               token: result?.data?.result?.access,
               retoken: result?.data?.result?.refresh,
-            })
+            }),
           );
           if (window) {
             window?.location?.reload();
           }
-          const customerData = await axios.get(`${API_BASE_URL}/ecommerce/customer`, {
-            headers: { Authorization: `Bearer ${result?.data?.result?.access}` },
-          });
+          const customerData = await axios.get(
+            `${API_BASE_URL}/ecommerce/customer`,
+            {
+              headers: {
+                Authorization: `Bearer ${result?.data?.result?.access}`,
+              },
+            },
+          );
           dispatch(setUserDetails(customerData?.data.result));
         }
       } catch (error) {
         dispatch(setUserDetails(null));
+        dispatch(setToken(null));
         return false;
       }
     }
+    dispatch(setToken(null));
     return false;
   }
 };
 /////////////forget password
 export const forgetPassword = (email) => async (dispatch) => {
   try {
-    const data = await axios.post(`${API_BASE_URL}/ecommerce/customer/sendForgotPasswordEmail?email=${email}`);
+    const data = await axios.post(
+      `${API_BASE_URL}/ecommerce/customer/sendForgotPasswordEmail?email=${email}`,
+    );
     setAlert("success", "Link has been sent to your Email")(dispatch);
     return true;
   } catch (error) {
@@ -137,26 +158,32 @@ export const forgetPassword = (email) => async (dispatch) => {
   }
 };
 
-export const resetPassword = (password, confirmPassword, email, token) => async (dispatch) => {
-  let body = {
-    password,
-    confirmPassword,
-  };
+export const resetPassword =
+  (password, confirmPassword, email, token) => async (dispatch) => {
+    let body = {
+      password,
+      confirmPassword,
+    };
 
-  try {
-    await axios.post(`${API_BASE_URL}/ecommerce/customer/resetPassword?email=${email}&token=${token}`, body);
-    setAlert("success", "Your Password is updated successfully!")(dispatch);
-    return true;
-  } catch (error) {
-    setAlert("error", "Something went wrong!")(dispatch);
-    return false;
-  }
-};
+    try {
+      await axios.post(
+        `${API_BASE_URL}/ecommerce/customer/resetPassword?email=${email}&token=${token}`,
+        body,
+      );
+      setAlert("success", "Your Password is updated successfully!")(dispatch);
+      return true;
+    } catch (error) {
+      setAlert("error", "Something went wrong!")(dispatch);
+      return false;
+    }
+  };
 
 /////////////////register
 export const getSalesmanDetails = async (dispatch) => {
   try {
-    const data = await axios.get(`${API_BASE_URL}/ecommerce/employee/list?size=1000`);
+    const data = await axios.get(
+      `${API_BASE_URL}/ecommerce/employee/list?size=1000`,
+    );
 
     return data?.data?.result?.content;
   } catch (err) {
@@ -231,28 +258,57 @@ export const register = (details) => async (dispatch) => {
   };
 
   let bodyFormData = new FormData();
-  businessLicense?.[0] && bodyFormData.append("businessLicense", businessLicense?.[0], businessLicense?.[0]?.name);
-  tobaccoLicense?.[0] && bodyFormData.append("tobaccoLicense", tobaccoLicense?.[0], tobaccoLicense?.[0]?.name);
-  feinLicense?.[0] && bodyFormData.append("feinLicense", feinLicense?.[0], feinLicense?.[0]?.name);
-  drivingLicense?.[0] && bodyFormData.append("drivingLicense", drivingLicense?.[0], drivingLicense?.[0]?.name);
-  voidCheck?.[0] && bodyFormData.append("voidCheck", voidCheck?.[0], voidCheck?.[0]?.name);
+  businessLicense?.[0] &&
+    bodyFormData.append(
+      "businessLicense",
+      businessLicense?.[0],
+      businessLicense?.[0]?.name,
+    );
+  tobaccoLicense?.[0] &&
+    bodyFormData.append(
+      "tobaccoLicense",
+      tobaccoLicense?.[0],
+      tobaccoLicense?.[0]?.name,
+    );
+  feinLicense?.[0] &&
+    bodyFormData.append(
+      "feinLicense",
+      feinLicense?.[0],
+      feinLicense?.[0]?.name,
+    );
+  drivingLicense?.[0] &&
+    bodyFormData.append(
+      "drivingLicense",
+      drivingLicense?.[0],
+      drivingLicense?.[0]?.name,
+    );
+  voidCheck?.[0] &&
+    bodyFormData.append("voidCheck", voidCheck?.[0], voidCheck?.[0]?.name);
   bodyFormData.append("customerObj", JSON.stringify(userDetails));
 
   try {
-    await axios.post(`${API_BASE_URL}/ecommerce/customer/withDocuments`, bodyFormData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Accept: `application/json, text/plain`,
+    await axios.post(
+      `${API_BASE_URL}/ecommerce/customer/withDocuments`,
+      bodyFormData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Accept: `application/json, text/plain`,
+        },
       },
-    });
+    );
     dispatch(toggleLoading(false));
     setAlert(
       "success",
-      "We have received your wholesale application, please check your email for further details!"
+      "We have received your wholesale application, please check your email for further details!",
     )(dispatch);
     return true;
   } catch (err) {
-    setAlert("error", err?.response?.data?.error?.details || "Unable to signup", { autoClose: false })(dispatch);
+    setAlert(
+      "error",
+      err?.response?.data?.error?.details || "Unable to signup",
+      { autoClose: false },
+    )(dispatch);
     dispatch(toggleLoading(false));
     return false;
   }

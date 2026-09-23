@@ -1,7 +1,7 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import cx from "classnames";
 import Router, { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { IoIosArrowForward } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,7 +29,7 @@ const NavDrawer = ({ onListPage, businessId }) => {
       revalidateIfStale: false,
       revalidateOnFocus: false,
     },
-    { stateId: true }
+    { stateId: true },
   );
 
   const dispatch = useDispatch();
@@ -37,6 +37,14 @@ const NavDrawer = ({ onListPage, businessId }) => {
 
   const [dropId, setDropId] = useState([-1]);
   const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    if (userDetails) {
+      setValue(0);
+    } else {
+      setValue(1);
+    }
+  }, [userDetails]);
 
   const handleClick = (product) => {
     Router.push({
@@ -230,13 +238,15 @@ const NavDrawer = ({ onListPage, businessId }) => {
               },
             }}
           >
-            <Tab
-              label="Menu"
-              style={{
-                color: "#000000",
-                fontSize: "1.2rem",
-              }}
-            />
+            {userDetails && (
+              <Tab
+                label="Menu"
+                style={{
+                  color: "#000000",
+                  fontSize: "1.2rem",
+                }}
+              />
+            )}
             <Tab
               label="Account"
               style={{
@@ -245,28 +255,30 @@ const NavDrawer = ({ onListPage, businessId }) => {
               }}
             />
           </Tabs>
-          <CustomTabPanel value={value} index={0}>
-            <h3
-              style={{
-                margin: "1rem 0.5rem",
-                color: "#000000",
-                fontSize: "16px",
-              }}
-            >
-              Categories
-            </h3>
-            <DrawerNav onListPage={onListPage} />
-            <h3
-              style={{
-                margin: "1rem 0.5rem",
-                color: "#000000",
-                fontSize: "16px",
-              }}
-            >
-              Brands
-            </h3>
-            <BrandNav businessId={businessId} />
-          </CustomTabPanel>
+          {userDetails && (
+            <CustomTabPanel value={value} index={0}>
+              <h3
+                style={{
+                  margin: "1rem 0.5rem",
+                  color: "#000000",
+                  fontSize: "16px",
+                }}
+              >
+                Categories
+              </h3>
+              <DrawerNav onListPage={onListPage} />
+              <h3
+                style={{
+                  margin: "1rem 0.5rem",
+                  color: "#000000",
+                  fontSize: "16px",
+                }}
+              >
+                Brands
+              </h3>
+              <BrandNav businessId={businessId} />
+            </CustomTabPanel>
+          )}
           <CustomTabPanel value={value} index={1}>
             <AccountNav />
           </CustomTabPanel>
@@ -314,7 +326,7 @@ export const BrandNav = ({ businessId }) => {
     {
       revalidateIfStale: false,
       revalidateOnFocus: false,
-    }
+    },
   );
   return (
     <div

@@ -31,7 +31,10 @@ const Login = () => {
         password,
       };
       setLogin(true);
-      LoginFunction(data)(dispatch).then((data) => {
+      LoginFunction(
+        data,
+        Router,
+      )(dispatch).then((data) => {
         if (data) {
           setUsername("");
           setPassword("");
