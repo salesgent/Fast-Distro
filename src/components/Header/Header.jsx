@@ -98,7 +98,7 @@ const Header = ({ businessId }) => {
 
         {width > 1400 && (
           <HeaderNav className="noBelowLg">
-            <SearchHeader businessId={businessId} />
+            {userDetails && <SearchHeader businessId={businessId} />}
             {/* <div
               style={{
                 backgroundColor: "#000000",
