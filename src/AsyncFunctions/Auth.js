@@ -284,9 +284,23 @@ export const register = (details) => async (dispatch) => {
     );
   voidCheck?.[0] &&
     bodyFormData.append("voidCheck", voidCheck?.[0], voidCheck?.[0]?.name);
-  bodyFormData.append("customerObj", JSON.stringify(userDetails));
-
+  let validateToken = "";
   try {
+    try {
+      const { data: tokenResponse } = await axios.post(
+        `${API_BASE_URL}/ecommerce/customer/validationToken`,
+        userDetails,
+      );
+      validateToken = tokenResponse?.result;
+    } catch (e) {}
+
+    bodyFormData.append(
+      "customerObj",
+      JSON.stringify({
+        ...userDetails,
+        validateToken,
+      }),
+    );
     await axios.post(
       `${API_BASE_URL}/ecommerce/customer/withDocuments`,
       bodyFormData,
