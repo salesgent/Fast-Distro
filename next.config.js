@@ -37,6 +37,17 @@ const nextConfig = {
     config.resolve.fallback = { ...config.resolve.fallback, fs: false };
     return config;
   },
+  async headers() {
+    // Let browsers keep static files from /public for a day instead of re-checking them on every visit.
+    // Only static assets are listed here: never add /api or page routes (stock, prices, cart and account
+    // data must not be cached, and "public" would let shared caches serve one user's data to another).
+    const oneDay = [{ key: "Cache-Control", value: "public, max-age=86400" }];
+    return [
+      { source: "/favicon/:path*", headers: oneDay },
+      { source: "/images/:path*", headers: oneDay },
+      { source: "/vercel.svg", headers: oneDay },
+    ];
+  },
   async rewrites() {
     return [
       {
